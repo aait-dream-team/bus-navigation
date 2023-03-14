@@ -1,0 +1,26 @@
+# build stage
+FROM node:14.16.0-alpine3.13 AS build-stage
+# make our working directory in to /code 
+WORKDIR /code
+# copy dependencies to install first 
+# copy by its own for optimaziation purpose(caching when building the container)
+COPY package*.json ./
+# install necessary libarys 
+RUN npm i
+# copy the rest of application
+COPY . . 
+# build the application with only necessary dependencies 
+RUN npm run build
+# production stage
+# used nginx webserver to server the build applicatoin in the previous  
+FROM --platform=linux/amd64 nginx:1.12-alpine
+# RUN addgroup app && adduser -S -G app app
+# USER app
+# copy the build file from /app/build to /usr/share/nginx/html
+# /usr/share/nginx/html is standard path for serveing files using nginx 
+COPY --from=build-stage /code/build /usr/share/nginx/html
+# default port 
+EXPOSE 3000
+# used entrpypoint instead of cmd because entrypoint is not overidable 
+# start the application  
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
