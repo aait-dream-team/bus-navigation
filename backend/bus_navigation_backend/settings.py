@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'agencies',
     'routes',
     'stops',
+    'transfers',
 ]
 
 MIDDLEWARE = [
