@@ -18,7 +18,7 @@ class Agency(models.Model):
     time_zone = models.CharField(choices=TIME_ZONE, max_length=200)
     lang = models.CharField(choices=LANG, max_length=200)
     phone = models.CharField(max_length=20)
-    admin = models.ForeignKey(to = Admin, on_delete=models.CASCADE) # TODO: cascade on delete
+    admin = models.ForeignKey(to = Admin, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
         return f'{self.name} ID: {self.id} Admin: {self.admin}'
