@@ -19,11 +19,14 @@ from admins import views as admin_views
 from rest_framework.authtoken import views as auth_views
 from rest_framework.routers import DefaultRouter
 from agencies import views as agency_views
-
+from routes import views as route_views
+from stops import views as stop_views
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet, basename='admins_create')
 router.register(r'admins', admin_views.AdminsViewSet, basename='admins')
 router.register(r'agencies', agency_views.AgencyViewSet, basename='agencies')
+router.register(r'routes', route_views.RouteViewSet, basename='routes')
+router.register(r'stops', stop_views.StopViewSet, basename='stops')
 
 
 urlpatterns = [

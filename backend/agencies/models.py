@@ -19,3 +19,6 @@ class Agency(models.Model):
     lang = models.CharField(choices=LANG, max_length=200)
     phone = models.CharField(max_length=20)
     admin = models.ForeignKey(to = Admin, on_delete=models.CASCADE) # TODO: cascade on delete
+    
+    def __str__(self):
+        return f'{self.name} ID: {self.id} Admin: {self.admin}'

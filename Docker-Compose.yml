@@ -13,11 +13,14 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    restart: unless-stopped
   backend:
     build: ./backend
 
     volumes:
       - ./backend:/code
+    
+    restart: unless-stopped
 
     ports:
       - "8000:8000"
@@ -33,6 +36,7 @@ services:
     depends_on:
       - db
   frontend:
+    restart: unless-stopped
     build: 
       context: ./frontend
       dockerfile: Dockerfile

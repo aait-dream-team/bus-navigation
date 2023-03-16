@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'admins',
     'agencies',
+    'routes',
+    'stops',
 ]
 
 MIDDLEWARE = [
@@ -80,12 +82,12 @@ WSGI_APPLICATION = 'bus_navigation_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("POSTGRES_DB", "bus_navigation"),
-        'USER': os.getenv("POSTGRES_USER", "postgres"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD", "postgres"),
-        'HOST': os.getenv("DATABASE_URL", "localhost"),
-        'PORT': os.getenv("DATABASE_PORT", '5432'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
