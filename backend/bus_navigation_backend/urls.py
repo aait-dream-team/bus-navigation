@@ -30,6 +30,7 @@ router.register(r'agencies', agency_views.AgencyViewSet, basename='agencies')
 router.register(r'agencies/routes', route_views.RouteViewSet, basename='routes')
 router.register(r'stops', stop_views.StopViewSet, basename='stops')
 router.register(r'transfers', transfer_views.TransferViewSet, basename='transfers')
+router.register(r'agencies/calendars', transfer_views.TransferViewSet, basename='calendars')
 
 
 
