@@ -17,6 +17,6 @@ class CreateAdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Admin
-        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'auth_token',)
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'auth_token', 'user_type')
         read_only_fields = ('auth_token',)
         extra_kwargs = {'password': {'write_only': True}}

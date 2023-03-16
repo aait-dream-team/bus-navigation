@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from admins import views
+from admins import views as admin_views
 from rest_framework.authtoken import views as auth_views
 from rest_framework.routers import DefaultRouter
-
+from agencies import views as agency_views
 
 router = DefaultRouter()
-router.register(r'admins/create', views.AdminsCreateViewSet, basename='admins_create')
-router.register(r'admins', views.AdminsViewSet, basename='admins')
+router.register(r'admins/create', admin_views.AdminsCreateViewSet, basename='admins_create')
+router.register(r'admins', admin_views.AdminsViewSet, basename='admins')
+router.register(r'agencies', agency_views.AgencyViewSet, basename='agencies')
 
 
 urlpatterns = [
