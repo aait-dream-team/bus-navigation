@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'routes',
     'stops',
     'transfers',
-    'calendars'
+    'calendars',
+    'calendar_dates', 
 ]
 
 MIDDLEWARE = [

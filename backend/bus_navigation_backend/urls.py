@@ -22,16 +22,17 @@ from agencies import views as agency_views
 from routes import views as route_views
 from stops import views as stop_views
 from transfers import views as transfer_views
-
+from calendars import views as calendar_views
+from calendar_dates import views as calendar_date_views
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet, basename='admins_create')
 router.register(r'admins', admin_views.AdminsViewSet, basename='admins')
 router.register(r'agencies', agency_views.AgencyViewSet, basename='agencies')
-router.register(r'agencies/routes', route_views.RouteViewSet, basename='routes')
+router.register(r'routes', route_views.RouteViewSet, basename='routes')
 router.register(r'stops', stop_views.StopViewSet, basename='stops')
 router.register(r'transfers', transfer_views.TransferViewSet, basename='transfers')
-router.register(r'agencies/calendars', transfer_views.TransferViewSet, basename='calendars')
-
+router.register(r'calendars', calendar_views.CalendarViewSet, basename='calendars')
+router.register(r'calendar_dates', calendar_date_views.CalendarDateViewSet , basename='calendar_dates')
 
 
 urlpatterns = [
