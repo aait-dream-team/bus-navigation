@@ -11,11 +11,11 @@ class Stop(models.Model):
     # zone_id = models.CharField(max_length=50)
     stop_url = models.URLField()
     location_type = models.CharField(choices=LocationType, max_length=100) # TODO don't know what location_types are
-    # parent_station = models.ForeignKey('self', on_delete=models.CASCADE, null=True) 
+    # parent_station = models.ForeignKey('self', on_delete=models.CASCADE, null=True) # TODO recursive problem
     admin = models.ForeignKey(to = Admin, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.name} ID : {self.id}'
+        return f'{self.stop_name} ID : {self.id}'
 
     
 
