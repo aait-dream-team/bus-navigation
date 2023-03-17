@@ -24,6 +24,10 @@ from stops import views as stop_views
 from transfers import views as transfer_views
 from calendars import views as calendar_views
 from calendar_dates import views as calendar_date_views
+from fares import views as fare_views
+from stop_times import views as stop_time_views
+from trips import views as trip_views
+
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet, basename='admins_create')
 router.register(r'admins', admin_views.AdminsViewSet, basename='admins')
@@ -33,6 +37,9 @@ router.register(r'stops', stop_views.StopViewSet, basename='stops')
 router.register(r'transfers', transfer_views.TransferViewSet, basename='transfers')
 router.register(r'calendars', calendar_views.CalendarViewSet, basename='calendars')
 router.register(r'calendar_dates', calendar_date_views.CalendarDateViewSet , basename='calendar_dates')
+router.register(r'fares', fare_views.FareViewSet, basename='fares')
+router.register(r'stop_times', stop_time_views.StopTimeViewSet, basename='stop_times')
+router.register(r'trips', trip_views.TripViewSet, basename='trips')
 
 
 urlpatterns = [
