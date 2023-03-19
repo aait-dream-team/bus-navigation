@@ -41,10 +41,12 @@ router.register(r'fares', fare_views.FareViewSet, basename='fares')
 router.register(r'stop_times', stop_time_views.StopTimeViewSet, basename='stop_times')
 router.register(r'trips', trip_views.TripViewSet, basename='trips')
 
+urlpatterns = router.urls
 
-urlpatterns = [
+urlpatterns += [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
     path('api-token-auth/', auth_views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
