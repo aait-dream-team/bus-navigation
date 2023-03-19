@@ -7,7 +7,7 @@ from admins.models import Admin, USER_TYPES
 import logging
 logger = logging.getLogger(__name__)
 
-class PersonViewSetTests(APITestCase):
+class AgencyViewSetTests(APITestCase):
     def setUp(self):
         logger.debug('Adding a new admin into database')
         self.admin = Admin(username='admin@gmail.com', password='admin1234', first_name = 'admin', last_name = 'admin', email = 'admin@gamil.com', user_type =  USER_TYPES[0][0])
