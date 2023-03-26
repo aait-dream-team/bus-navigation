@@ -1,5 +1,7 @@
 from django.db import models
 from agencies.models import Agency
+from stops.models import Stop
+from trips.models import Trip
 
 class StopTime(models.Model):
     arrival_time = models.TimeField()
@@ -7,3 +9,5 @@ class StopTime(models.Model):
     stop_sequence = models.IntegerField()
     stop_headsign = models.CharField(max_length=200)
     agency = models.ForeignKey(to = Agency, on_delete=models.CASCADE) 
+    trip = models.ForeignKey(to = Trip, on_delete=models.CASCADE)
+    stop = models.ForeignKey(to = Stop, on_delete=models.CASCADE)

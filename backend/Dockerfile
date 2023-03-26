@@ -1,4 +1,5 @@
-FROM --platform=linux/amd64 python:alpine
+FROM --platform=linux/amd64 python:alpine3.13
+RUN apk add --update busybox-suid
 RUN addgroup app && adduser -S -G app app
 USER app
 
@@ -11,4 +12,3 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 EXPOSE 8000 
-CMD [ "python", "manage.py", "runserver" ,"0.0.0.0:8000" ]

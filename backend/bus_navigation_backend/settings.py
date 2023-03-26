@@ -72,8 +72,8 @@ INSTALLED_APPS = [
     'trips',
     'transfers',
     'calendars',
-    'calendar_dates', 
-    # 'redgreenunittest',
+    'calendar_dates',
+    'celery_worker.apps.CeleryWorkerConfig',
 ]
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
