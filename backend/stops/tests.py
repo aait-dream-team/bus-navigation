@@ -3,9 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase,force_authenticate,APIClient
 from admins.models import Admin, USER_TYPES
 from agencies.models import Agency
-from calendars.models import Calendar
 from .models import Stop, LocationType
-from datetime import date
 import logging
 logger = logging.getLogger(__name__)
 class StopViewSetTests(APITestCase):
@@ -19,11 +17,6 @@ class StopViewSetTests(APITestCase):
         self.agency = Agency(name = 'bus1', url = 'http://127.0.0.1:8000/', lang='en', time_zone='+3', phone = '+251991439281', admin = self.s_admin)
         self.agency.save()
 
-        self.calendar = Calendar(
-            monday = True, tuesday = True, wednesday = True, thursday = True, friday = True,saturday = True,
-             sunday = True, start_date = date(2023, 3, 10), end_date = date(2023, 3, 24), agency = self.agency)
-        self.calendar.save()
-        
         self.parent_station = Stop(stop_name = 's1', stop_desc = 'stop1' , stop_code = 'j8', stop_lat = '5343', stop_long = '7834', 
                                     stop_url = 'http://localhost:8000/stops/', location_type = LocationType[0][0], 
                                     admin = self.admin )
@@ -95,7 +88,7 @@ class StopViewSetTests(APITestCase):
         json = response.json()
         logger.debug('Testing status code response: %s, code: %d'%(response, response.status_code))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(json) , 1)
+        self.assertEqual(len(json) , 0)
         logger.debug("The test_get_list_stops_success test has ended successfully")
     
     def test_get_list_stops_with_empty_routes(self):

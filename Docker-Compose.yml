@@ -44,7 +44,7 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    command: python manage.py test stops
+    command: python manage.py test
   frontend:
     restart: unless-stopped
     build: 
