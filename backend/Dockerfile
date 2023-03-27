@@ -1,4 +1,5 @@
-FROM --platform=linux/amd64 python:alpine
+FROM --platform=linux/amd64 python:alpine3.13
+RUN apk add --update busybox-suid
 RUN addgroup app && adduser -S -G app app
 USER app
 

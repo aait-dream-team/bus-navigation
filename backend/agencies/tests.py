@@ -38,7 +38,7 @@ class AgencyViewSetTests(APITestCase):
         logger.debug('Testing status code response: %s, code: %d'%(response.json(), response.status_code))
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(json['name'] , json['name'])
+        self.assertEqual(data['name'] , json['name'])
         self.assertEqual(data['url'] , json['url'])
         self.assertEqual(data['lang'] , json['lang'])
         self.assertEqual(data['phone'] , json['phone'])

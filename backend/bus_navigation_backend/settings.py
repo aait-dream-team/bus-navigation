@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'channels_redis',
     'django_celery_beat',
     # 'redgreenunittest',
+    'celery_worker.apps.CeleryWorkerConfig',
 ]
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"

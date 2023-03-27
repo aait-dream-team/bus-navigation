@@ -70,15 +70,29 @@ services:
       - db
       - redis
       - celery-worker
-  # frontend:
-  #   restart: unless-stopped
-  #   build: 
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports: 
-  #     - 3000:3000
-  #   volumes:
-  #     - ./frontend:/code
+  frontend:
+    restart: unless-stopped
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports: 
+      - 3000:3000
+    volumes:
+      - ./frontend:/code
+  otp:
+    build: ./otp-service
+    restart: unless-stopped
+    ports:
+      - 8082:8080
+    volumes:
+      - ./graphs:/var/otp/graphs
+    environment:
+      - JAVA_OPTIONS=-Xmx2G
+    command:
+      [
+        '--load /var/otp/graphs/portland',
+        '--maxThreads 4'
+      ]
 
 volumes:
   postgres_data:
