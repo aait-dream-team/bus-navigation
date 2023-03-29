@@ -70,6 +70,16 @@ services:
       - db
       - redis
       - celery-worker
+  backend-test:
+    image: bus-navigation-backend
+
+    volumes:
+      - ./backend:/code
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: python manage.py test
   frontend:
     restart: unless-stopped
     build: 
@@ -79,13 +89,20 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/code
+
+  frontend-test:
+    image: bus-navigation-frontend
+
+    volumes:
+      - ./forntend:/code
+    command: npm test
   otp:
     build: ./otp-service
     restart: unless-stopped
     ports:
       - 8082:8080
     volumes:
-      - ./graphs:/var/otp/graphs
+      - ./otp-service/graphs:/var/otp/graphs
     environment:
       - JAVA_OPTIONS=-Xmx2G
     command:
