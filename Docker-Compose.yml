@@ -4,7 +4,7 @@ services:
     image: postgres
 
     ports:
-      - 5435:5435
+      - 5432:5432
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -106,7 +106,7 @@ services:
     command: npm test
   otp:
     build: ./otp-service
-    # restart: unless-stopped
+    restart: unless-stopped
     ports:
       - 8082:8080
     volumes:
