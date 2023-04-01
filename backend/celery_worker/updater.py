@@ -44,7 +44,6 @@ logger = logging.getLogger()
 
 def get_connection():
     import psycopg2
-    logger.warn(settings.DATABASES)
     conn = psycopg2.connect(
         host=settings.DATABASES['default']['HOST'],
         port=settings.DATABASES['default']['PORT'],
