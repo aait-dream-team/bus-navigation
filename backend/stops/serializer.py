@@ -7,7 +7,7 @@ class StopSerializer(serializers.ModelSerializer):
 
 class ExportStopSerializer(serializers.ModelSerializer):
     level_id = serializers.CharField(default='')
-    parent_station = serializers.CharField(source='parent_station.stop_name')
+    parent_station = serializers.CharField(source='parent_station.stop_name', default='')
     stop_id = serializers.CharField(source='id')
     stop_lon = serializers.CharField(source='stop_long')
     class Meta:

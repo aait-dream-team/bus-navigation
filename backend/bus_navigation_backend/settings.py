@@ -213,4 +213,9 @@ CELERY_BEAT_SCHEDULE = {
         # 'schedule':5, # Eecutes every 5 seconds
         'schedule': crontab(minute=0, hour='*/3'), # 	Execute every three hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.
     },
+    'start_serializing': {
+        'task': 'bus_navigation_backend.celery.start_serializing',
+        # 'schedule':30, # Eecutes every 5 seconds
+        'schedule': crontab(minute=0, hour='*/6'), # 	Execute every six hours from midnight
+    },
 }

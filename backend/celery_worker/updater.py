@@ -1,6 +1,5 @@
 from datetime import datetime
 import logging
-from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
 
 from stops.models import Stop
@@ -42,12 +41,20 @@ TEMP_DIR_NAME = settings.TEMP_DIR_NAME
 BASE_DIR = settings.BASE_DIR
 
 logger = logging.getLogger()
-def start():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(start_serializing, 'interval', minutes=1)
-    scheduler.start()
+
+def get_connection():
+    import psycopg2
+    logger.warn(settings.DATABASES)
+    conn = psycopg2.connect(
+        host=settings.DATABASES['default']['HOST'],
+        port=settings.DATABASES['default']['PORT'],
+        dbname=settings.DATABASES['default']['NAME'],
+        user=settings.DATABASES['default']['USER'],
+        password=settings.DATABASES['default']['PASSWORD']
+    )
 
 def start_serializing():
+    get_connection()
     path = os.path.join(BASE_DIR, TEMP_DIR_NAME)
     if not os.path.exists(path):
         os.mkdir(os.path.join(BASE_DIR, TEMP_DIR_NAME))
