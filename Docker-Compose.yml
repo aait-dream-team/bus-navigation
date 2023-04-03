@@ -49,6 +49,10 @@ services:
     
     volumes:
       - ./backend:/code
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     
     restart: unless-stopped
     
@@ -65,6 +69,10 @@ services:
       - ./backend:/code
     
     restart: unless-stopped
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     
     depends_on:
       - db
@@ -94,7 +102,7 @@ services:
     image: bus-navigation-frontend
 
     volumes:
-      - ./forntend:/code
+      - ./frontend:/code
     command: npm test
   otp:
     build: ./otp-service

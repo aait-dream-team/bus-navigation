@@ -1,5 +1,4 @@
 import os
-
 from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
@@ -19,3 +18,9 @@ def debug_task(self):
 @app.task(bind=True)
 def hello_world(self):
     print('Hello Celery')
+
+@app.task(bind=True)
+def start_serializing(self):
+   # Adding import here to avoid apps not loaded yet error.
+   from celery_worker.updater import start_serializing
+   start_serializing()

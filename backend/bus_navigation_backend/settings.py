@@ -17,8 +17,7 @@ from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+TEMP_DIR_NAME = 'temp_files'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -213,5 +212,10 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'bus_navigation_backend.celery.hello_world',
         # 'schedule':5, # Eecutes every 5 seconds
         'schedule': crontab(minute=0, hour='*/3'), # 	Execute every three hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.
+    },
+    'start_serializing': {
+        'task': 'bus_navigation_backend.celery.start_serializing',
+        # 'schedule':30, # Eecutes every 5 seconds
+        'schedule': crontab(minute=0, hour='*/6'), # 	Execute every six hours from midnight
     },
 }
