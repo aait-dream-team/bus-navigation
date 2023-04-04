@@ -1,7 +1,7 @@
-FROM lpicanco/java11-alpine:11.0
+FROM mdsol/java11-jre
 
 ENV OTP_VERSION=2.0.0
-ENV JAVA_OPTIONS=-Xmx2G
+ENV JAVA_OPTIONS=-Xmx4G
 
 ADD https://repo1.maven.org/maven2/org/opentripplanner/otp/$OTP_VERSION/otp-$OTP_VERSION-shaded.jar /usr/local/share/java/
 

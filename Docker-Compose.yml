@@ -69,7 +69,7 @@ services:
     volumes:
       - ./otp-service/graphs:/var/otp/graphs
     environment:
-      - JAVA_OPTIONS=-Xmx2G
+      - JAVA_OPTIONS=-Xmx4G
     command:
       [
         '--load /var/otp/graphs/portland',
