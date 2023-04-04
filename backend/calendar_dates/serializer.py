@@ -7,3 +7,15 @@ class CalendarDateSerializer(serializers.ModelSerializer):
 
 
         
+class ExportCalendarDateSerializer(serializers.ModelSerializer):
+    service_id = serializers.CharField(source='service.id')
+    date = serializers.DateField(source='date')
+    exception_type = serializers.CharField(source='exception_type')
+    
+    class Meta:
+        model = CalendarDate
+        fields = ['service_id', 'date', 'exception_type']
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return [value for value in data.values()]

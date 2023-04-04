@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+TEMP_DIR_NAME = 'temp_files'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -54,6 +55,7 @@ LOGGING = {
 # Application definition
 
 INSTALLED_APPS = [
+     'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,7 +74,11 @@ INSTALLED_APPS = [
     'trips',
     'transfers',
     'calendars',
-    'calendar_dates',
+    'calendar_dates', 
+    'channels',
+    'channels_redis',
+    'django_celery_beat',
+    # 'redgreenunittest',
     'celery_worker.apps.CeleryWorkerConfig',
 ]
 
@@ -113,6 +119,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bus_navigation_backend.wsgi.application'
+ASGI_APPLICATION = 'bus_navigation_backend.routing.application'
 
 
 # Database
@@ -178,3 +185,37 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CHANNEL_LAYERS = {
+    # 'default': {
+    #     'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    # },
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis', 6379)],
+        },
+    },
+}
+
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'hello_world': {
+        'task': 'bus_navigation_backend.celery.hello_world',
+        # 'schedule':5, # Eecutes every 5 seconds
+        'schedule': crontab(minute=0, hour='*/3'), # 	Execute every three hours: midnight, 3am, 6am, 9am, noon, 3pm, 6pm, 9pm.
+    },
+    'start_serializing': {
+        'task': 'bus_navigation_backend.celery.start_serializing',
+        # 'schedule':30, # Eecutes every 5 seconds
+        'schedule': crontab(minute=0, hour='*/6'), # 	Execute every six hours from midnight
+    },
+}

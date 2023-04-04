@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CeleryWorkerConfig(AppConfig):
+class NotificationsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'celery_worker'
+    name = 'notifications'
