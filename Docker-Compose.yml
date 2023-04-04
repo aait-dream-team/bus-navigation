@@ -4,7 +4,7 @@ services:
     image: postgres
 
     ports:
-      - 5432:5432
+      - 5435:5435
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -112,10 +112,10 @@ services:
     volumes:
       - ./otp-service/graphs:/var/otp/graphs
     environment:
-      - JAVA_OPTIONS=-Xmx2G
+      - JAVA_OPTIONS=-Xmx4G
     command:
       [
-        '--load /var/otp/graphs/portland',
+        '--build --serve /var/otp/graphs/portland',
         '--maxThreads 4'
       ]
 
