@@ -27,6 +27,7 @@ from calendar_dates import views as calendar_date_views
 from fares import views as fare_views
 from stop_times import views as stop_time_views
 from trips import views as trip_views
+from plan import views as plan_views
 
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet, basename='admins_create')
@@ -45,6 +46,7 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path('admin/', admin.site.urls),
+    path('plan/', plan_views.UserView.as_view()),
     # path('', include(router.urls)),
     path('api-token-auth/', auth_views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
