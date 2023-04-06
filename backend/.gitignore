@@ -6,3 +6,4 @@ venv/
 temp_files/
 .dockerignore
 gtfs.zip
+staticfiles/
