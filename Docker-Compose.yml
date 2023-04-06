@@ -4,7 +4,7 @@ services:
     image: postgres
 
     ports:
-      - 5435:5435
+      - 5432:5432
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -34,6 +34,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
+    # Generate static css and js, apply migrations and start server
     command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && daphne bus_navigation_backend.asgi:application --bind 0.0.0.0 --port 8000"
 
     depends_on:
@@ -115,7 +116,7 @@ services:
       - JAVA_OPTIONS=-Xmx4G
     command:
       [
-        '--build --serve /var/otp/graphs/portland',
+        '--load /var/otp/graphs/portland',
         '--maxThreads 4'
       ]
 
