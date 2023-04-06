@@ -15,4 +15,7 @@ EXPOSE 8000
 
 ENV PATH="/home/app/.local/bin:${PATH}"
 
+# This will run collectstatic only if path doesn't exists. Otherwise, it will do nothing.
+RUN test ! -d /code/staticfiles || true && python manage.py collectstatic
+
 # CMD [ "python", "manage.py", "runserver" ,"0.0.0.0:8000" ]
