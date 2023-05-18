@@ -99,7 +99,7 @@ services:
       - JAVA_OPTIONS=-Xmx4G
     command:
       [
-        '--load /var/otp/graphs/portland',
+        '--build --serve /var/otp/graphs/portland',
         '--maxThreads 4'
       ]
 
