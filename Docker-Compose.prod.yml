@@ -1,39 +1,107 @@
----
 version: '3.8'
-
 services:
   db:
-    restart: unless-stopped
     image: postgres
+
     ports:
       - 5432:5432
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-
-  backend:
     restart: unless-stopped
+
+  redis:
+    image: "redis:alpine"
+  
+  backend:
     build: ./backend
+
+    volumes:
+      - ./backend:/code
+    
+    restart: unless-stopped
+
     ports:
       - "8000:8000"
+
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    command: sh -c "python ./manage.py migrate &&
-               ./manage.py runserver 0.0.0.0:8000"
+
+    # Generate static css and js, apply migrations and start server
+    command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && daphne bus_navigation_backend.asgi:application --bind 0.0.0.0 --port 8000"
+
     depends_on:
       - db
+      - redis
+      - celery-worker
+      - celery-beat
 
+  celery-worker:
+    build: ./backend
+    
+    command: celery -A bus_navigation_backend worker -l INFO
+    
+    volumes:
+      - ./backend:/code
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    
+    restart: unless-stopped
+    
+    depends_on:
+      - db
+      - redis
+
+  celery-beat:
+    build: ./backend
+    
+    command: celery -A bus_navigation_backend beat -l INFO
+    
+    volumes:
+      - ./backend:/code
+    
+    restart: unless-stopped
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    
+    depends_on:
+      - db
+      - redis
+      - celery-worker
   frontend:
     restart: unless-stopped
     build: 
       context: ./frontend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     ports: 
       - 3000:3000
+    volumes:
+      - ./frontend:/code
+  otp:
+    build: ./otp-service
+    restart: unless-stopped
+    ports:
+      - 8082:8080
+    volumes:
+      - ./otp-service/graphs:/var/otp/graphs
+    environment:
+      - JAVA_OPTIONS=-Xmx4G
+    command:
+      [
+        '--load /var/otp/graphs/portland',
+        '--maxThreads 4'
+      ]
+
 volumes:
   postgres_data:
