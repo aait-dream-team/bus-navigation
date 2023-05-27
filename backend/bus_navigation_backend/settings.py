@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     # 'redgreenunittest',
     'celery_worker.apps.CeleryWorkerConfig',
     'updater',
-    "corsheaders",
+    'corsheaders',
 ]
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
@@ -93,9 +93,9 @@ REST_FRAMEWORK = {
     ]
 }
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,6 +124,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bus_navigation_backend.wsgi.application'
 ASGI_APPLICATION = 'bus_navigation_backend.routing.application'
 
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -224,21 +229,3 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour='*/6'), # 	Execute every six hours from midnight
     },
 }
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-CORS_ALLOW_METHODS = [
-    'GET', 'POST', 'DELETE', 'PUT'
-]
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
