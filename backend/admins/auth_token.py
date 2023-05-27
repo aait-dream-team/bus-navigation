@@ -11,5 +11,5 @@ class CustomAuthToken(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
-            'user_type': user.user_type # assuming user_type is a field in your user model
+            'user_type': user.user_type
         })
