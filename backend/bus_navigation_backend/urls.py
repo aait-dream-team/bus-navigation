@@ -21,6 +21,7 @@ from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
 
+from admins import auth_token as custom_auth_views
 from agencies import views as agency_views
 from routes import views as route_views
 from stops import views as stop_views
@@ -51,7 +52,7 @@ urlpatterns += [
     path('admin/', admin.site.urls),
     path('plan/', plan_views.UserView.as_view()),
     # path('', include(router.urls)),
-    path('api-token-auth/', auth_views.obtain_auth_token),
+    path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
