@@ -51,3 +51,4 @@ wcwidth==0.2.6
 zope.interface==6.0
 apscheduler==3.10.1
 requests==2.28.2
+django-cors-headers==4.0.0
