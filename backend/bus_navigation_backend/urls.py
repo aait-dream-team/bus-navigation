@@ -47,7 +47,7 @@ router.register(r'fares', fare_views.FareViewSet, basename='fares')
 router.register(r'stop_times', stop_time_views.StopTimeViewSet, basename='stop_times')
 router.register(r'trips', trip_views.TripViewSet, basename='trips')
 router.register(r'alerts', update_views.AlertViewSet, basename='alerts')
-router.register(r'vehicle-updates', update_views.VehicleUpdate, basename='vehicle-updates')
+router.register(r'vehicle-updates', update_views.VehicleUpdateViewSet, basename='vehicle-updates')
 
 urlpatterns = router.urls
 
