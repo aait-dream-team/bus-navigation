@@ -1,3 +1,31 @@
-from django.shortcuts import render
+from rest_framework import viewsets, permissions
 
-# Create your views here.
+from .serializer import AlertSerializer, VehicleUpdateSerializer
+from utils.common_permissions import IsOwner, IsSystemAdmin
+from .models import Alert, VehicleUpdate
+
+class AlertViewSet(viewsets.ModelViewSet):
+    queryset = Alert.objects.all()
+    serializer_class = AlertSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'PUT' or self.request.method == 'PATCH':
+            permission_classes = [permissions.IsAuthenticated & IsOwner]
+        elif self.request.method == 'POST':
+            permission_classes = [permissions.IsAuthenticated & (IsOwner | IsSystemAdmin)]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
+    
+class VehicleUpdateViewSet(viewsets.ModelViewSet):
+    queryset = VehicleUpdate.objects.all()
+    serializer_class = VehicleUpdateSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'PUT' or self.request.method == 'PATCH':
+            permission_classes = [permissions.IsAuthenticated & IsOwner]
+        elif self.request.method == 'POST':
+            permission_classes = [permissions.IsAuthenticated & (IsOwner | IsSystemAdmin)]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
