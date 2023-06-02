@@ -22,7 +22,7 @@ services:
     build: ./backend
 
     volumes:
-      - ./backend:/home/se_natneam_mesele
+      - ./backend:/code
     
     restart: unless-stopped
 
@@ -49,7 +49,7 @@ services:
     command: celery -A bus_navigation_backend worker -l INFO
     
     volumes:
-      - ./backend:/home/se_natneam_mesele
+      - ./backend:/code
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
@@ -67,7 +67,7 @@ services:
     command: celery -A bus_navigation_backend beat -l INFO
     
     volumes:
-      - ./backend:/home/se_natneam_mesele
+      - ./backend:/code
     
     restart: unless-stopped
     environment:
@@ -83,7 +83,7 @@ services:
     image: bus-navigation-backend
 
     volumes:
-      - ./backend:/home/se_natneam_mesele
+      - ./backend:/code
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
@@ -97,13 +97,13 @@ services:
     ports: 
       - 3000:3000
     volumes:
-      - ./frontend:/home/se_natneam_mesele
+      - ./frontend:/code
 
   frontend-test:
     image: bus-navigation-frontend
 
     volumes:
-      - ./frontend:/home/se_natneam_mesele
+      - ./frontend:/code
     command: npm test
   otp:
     build: ./otp-service

@@ -82,7 +82,19 @@ INSTALLED_APPS = [
     'celery_worker.apps.CeleryWorkerConfig',
     'updater',
     'corsheaders',
+    'drf_yasg'
 ]
+
+SWAGGER_SETTINGS = {
+   'USE_SESSION_AUTH': False,
+   'SECURITY_DEFINITIONS': {
+      'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
