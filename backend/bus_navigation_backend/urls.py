@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+from bus_navigation_backend.new_admins import admin_site, super_admin_site
 from django.urls import path, include, re_path
 from admins import views as admin_views
 from rest_framework.authtoken import views as auth_views
@@ -74,7 +74,8 @@ schema_view = get_schema_view(
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
+    path('superadmin/', super_admin_site.urls),
     path('plan/', plan_views.UserView.as_view()),
     # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
