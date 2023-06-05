@@ -36,6 +36,7 @@ from stop_times import views as stop_time_views
 from trips import views as trip_views
 from plan import views as plan_views
 from updater import views as update_views
+from plan import test_views as test_views
 
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet,
@@ -76,6 +77,7 @@ urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('plan/', plan_views.UserView.as_view()),
+    path("test-updates/", test_views.TestView.as_view()),
     # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
