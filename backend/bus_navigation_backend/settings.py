@@ -150,7 +150,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
 ]
 CORS_ALLOW_METHODS = [
-    'GET', 'POST', 'DELETE', 'PUT'
+    'GET', 'POST', 'DELETE', 'PUT', 'PATCH'
 ]
 
 # Database
