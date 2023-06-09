@@ -77,7 +77,7 @@ urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('plan/', plan_views.UserView.as_view()),
-    path("test-updates/", test_views.TestView.as_view()),
+    path("test-updates/", update_views.AlertView.as_view()),
     # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
