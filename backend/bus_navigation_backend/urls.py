@@ -25,6 +25,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from admins import auth_token as custom_auth_views
+from admins.views import reset_request, reset_password
 from agencies import views as agency_views
 from routes import views as route_views
 from stops import views as stop_views
@@ -77,9 +78,10 @@ urlpatterns += [
     path('admin/', admin_site.urls),
     path('superadmin/', super_admin_site.urls),
     path('plan/', plan_views.UserView.as_view()),
-    # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-initiate-reset-password/', reset_request, name='initiate_reset_password'),
+    path('api-reset-password/', reset_password, name='reset_password'),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger',
