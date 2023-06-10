@@ -34,8 +34,13 @@ def reset_request(request):
     if serializer.is_valid():
         data = request.data
         email = data['email']
-        user = Admin.objects.get(email=email)
-        if Admin.objects.filter(email=email).exists():
+        user = None
+        try: 
+            user = Admin.objects.get(email=data['email'])
+        except:
+            return JsonResponse({'detail': 'Invalid email address'}, status=400)
+        
+        if user.is_active:
             user.save() #regenerate new OTP
             # Send OTP
             send_mail("Bus Navigation Password Reset", f"Your password reset OTP Code is {user.otp} \nThe code is valid for 30 minutes.", "bus-nav-verify@bus-nav.com", [email], fail_silently=False)
@@ -43,7 +48,7 @@ def reset_request(request):
             return JsonResponse(message, status=200)
         else:
             message = {
-                'detail': 'Invalid email address'}
+                'detail': 'Something went wrong'}
             return JsonResponse(message, status=400)
     else:
         message = {'detail': 'Invalid request data'}
@@ -56,7 +61,11 @@ def reset_password(request):
     serializer = ResetPasswordSerializer(data=request.data)
     if serializer.is_valid():
         data = request.data
-        user = Admin.objects.get(email=data['email'])
+        user = None
+        try: 
+            user = Admin.objects.get(email=data['email'])
+        except:
+            return JsonResponse({'detail': 'Invalid email address'}, status=400)
         if user.is_active:
             # Check if otp is valid
             if data['otp'] == user.otp and user.otp_created_at + timedelta(minutes=30) > datetime.now(pytz.timezone('Africa/Addis_Ababa')):
