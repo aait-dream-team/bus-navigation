@@ -22,17 +22,13 @@ class Admin(AbstractUser):
     class Meta:
         swappable = 'AUTH_USER_MODEL'
     def save(self, *args, **kwargs):
-        number_list = [x for x in range(10)]
         code_items_for_otp = []
         for i in range(6):
-            num = choice(number_list)
-            code_items_for_otp.append(num)
-
-        code_string = "".join(str(item) for item in code_items_for_otp)
+            code_items_for_otp.append(choice([x for x in range(10)]))
         
         self.email = self.username
-        self.otp = code_string
-        self.otp_created_at = datetime.now(pytz.timezone('America/New_York'))
+        self.otp = "".join(str(item) for item in code_items_for_otp)
+        self.otp_created_at = datetime.now(pytz.timezone('Africa/Addis_Ababa'))
         return super().save(*args, **kwargs)
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

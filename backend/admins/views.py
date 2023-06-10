@@ -38,8 +38,8 @@ def reset_request(request):
         if Admin.objects.filter(email=email).exists():
             user.save() #regenerate new OTP
             # Send OTP
-            send_mail("Bus Navigation Password Reset", f"Your password reset OTP Code is {user.otp} \n The code is valid for 30 minutes.", "bus-nav-verify@bus-nav.com", [email], fail_silently=False)
-            message = { 'detail': 'Success Message' }
+            send_mail("Bus Navigation Password Reset", f"Your password reset OTP Code is {user.otp} \nThe code is valid for 30 minutes.", "bus-nav-verify@bus-nav.com", [email], fail_silently=False)
+            message = { 'detail': 'Email Sent Successfully' }
             return JsonResponse(message, status=200)
         else:
             message = {
@@ -59,10 +59,7 @@ def reset_password(request):
         user = Admin.objects.get(email=data['email'])
         if user.is_active:
             # Check if otp is valid
-            print(user.otp_created_at + timedelta(minutes=30) > datetime.now(pytz.timezone('America/New_York')))
-            print(user.otp_created_at)
-            print(datetime.now(pytz.timezone('America/New_York')))
-            if data['otp'] == user.otp and user.otp_created_at + timedelta(minutes=30) > datetime.now(pytz.timezone('America/New_York')):
+            if data['otp'] == user.otp and user.otp_created_at + timedelta(minutes=30) > datetime.now(pytz.timezone('Africa/Addis_Ababa')):
                 if data['password'] != '':
                     # Change Password
                     user.set_password(data['password'])

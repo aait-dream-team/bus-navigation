@@ -97,8 +97,8 @@ SWAGGER_SETTINGS = {
 }
 
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '36f0fdac94fd74'
-EMAIL_HOST_PASSWORD = 'f6d2853c50208e'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD =  os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = '2525'
 
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
