@@ -4,7 +4,7 @@ from shapes.models import Shape
 from routes.models import Route
 
 class Trip(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True,  default=uuid.uuid4)
     headsign = models.CharField(max_length=200)
     short_name = models.CharField(max_length=200)
     direction = models.BooleanField()

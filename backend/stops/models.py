@@ -2,7 +2,7 @@ from django.db import models
 from admins.models import Admin 
 
 class Stop(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True,  default=uuid.uuid4)
     stop_name = models.CharField(max_length=200)
     stop_desc = models.CharField(max_length=500)
     stop_code = models.CharField(max_length=50)
