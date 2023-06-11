@@ -24,3 +24,11 @@ class CreateAdminSerializer(serializers.ModelSerializer):
             'username': {'required': True}, 
             'user_type': {'required': True},   
         }
+
+class ResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField(max_length=6)
+    password = serializers.CharField(max_length=100)
