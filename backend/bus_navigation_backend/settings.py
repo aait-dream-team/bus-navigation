@@ -82,7 +82,9 @@ INSTALLED_APPS = [
     'celery_worker.apps.CeleryWorkerConfig',
     'updater',
     'corsheaders',
-    'drf_yasg'
+    'drf_yasg',
+    'shapes',
+    'bulk_uploads'
 ]
 
 SWAGGER_SETTINGS = {
@@ -159,10 +161,10 @@ CORS_ALLOW_METHODS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
+        'NAME': os.environ.get('POSTGRES_NAME') or "postgres",
+        'USER': os.environ.get('POSTGRES_USER') or "postgres",
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD') or "postgres",
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }

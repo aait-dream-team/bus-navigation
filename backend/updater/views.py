@@ -72,28 +72,3 @@ class VehicleUpdateViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
-    
-def generateFeedMessage(sent_alert: Alert, entity):
-    entity.id = str(sent_alert.alert_feed_id)
-    alert = entity.alert
-    entity_sel = alert.informed_entity.add()
-    if sent_alert.affected_entity == "route":
-        entity_sel.route_id = sent_alert.entity_id
-    elif sent_alert.affected_entity == 'agency':
-        entity_sel.agency_id = sent_alert.entity_id
-    elif sent_alert.affected_entity == 'trip':
-        trip = entity_sel.trip
-        trip.trip_id = sent_alert.trip_id
-
-        print("We don't support trip_ids yet")
-        entity_sel.trip_id = sent_alert.entity_id
-    
-    alert.cause = gg.Alert.Cause.STRIKE
-    alert.effect = gg.Alert.Effect.REDUCED_SERVICE
-    active = alert.active_period.add()
-    active.start = time.mktime(sent_alert.start_timestamp)
-    active.end = time.mktime(sent_alert.start_timestamp) + sent_alert.duration.seconds
-    h = alert.header_text
-    trans = h.translation.add()
-    trans.text = f"We have an {sent_alert.effect} at {sent_alert.affected_entity} {sent_alert.entity_id} caused by {sent_alert.cause}"
-    trans.language = "en" 

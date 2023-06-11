@@ -37,6 +37,8 @@ from trips import views as trip_views
 from plan import views as plan_views
 from updater import views as update_views
 from plan import test_views as test_views
+from shapes import views as shape_views
+from bulk_uploads import views as bulk_upload_views
 
 router = DefaultRouter()
 router.register(r'admins/create', admin_views.AdminsCreateViewSet,
@@ -58,6 +60,7 @@ router.register(r'trips', trip_views.TripViewSet, basename='trips')
 router.register(r'alerts', update_views.AlertViewSet, basename='alerts')
 router.register(r'vehicle-updates',
                 update_views.VehicleUpdateViewSet, basename='vehicle-updates')
+router.register(r'shapes', shape_views.ShapeViewSet, basename="shapes")
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -78,6 +81,7 @@ urlpatterns += [
     path('admin/', admin.site.urls),
     path('plan/', plan_views.UserView.as_view()),
     path("test-updates/", update_views.AlertView.as_view()),
+    path('bulk_upload/', bulk_upload_views.unzip_and_add),
     # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),

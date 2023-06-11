@@ -3,6 +3,7 @@ from agencies.models import Agency
 
 RouteType = (("car" , "Roads"),("air", "AirPlanes"))
 class Route(models.Model):
+    id = models.CharField(max_length=200, primary_key=True)
     route_short_name = models.CharField(max_length=200)
     route_long_name = models.CharField(max_length=300)
     route_desc = models.CharField(max_length=500)
