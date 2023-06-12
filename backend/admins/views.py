@@ -20,6 +20,7 @@ class AdminsViewSet(mixins.RetrieveModelMixin,
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
 
+
 class AdminsCreateViewSet(mixins.CreateModelMixin,
                         viewsets.GenericViewSet):
     queryset = Admin.objects.all()
