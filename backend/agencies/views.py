@@ -5,10 +5,7 @@ from rest_framework import viewsets
 from .serializer import AgencySerializer
 from admins.permissions import IsSystemAdmin
 from .permissions import IsOwner
-from rest_framework.decorators import api_view, authentication_classes,permission_classes
 
-@authentication_classes([])
-@permission_classes([permissions.AllowAny])
 class AgencyViewSet(viewsets.ModelViewSet):
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
