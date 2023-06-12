@@ -1,4 +1,4 @@
-from django.contrib import admin
+from bus_navigation_backend.new_admins import admin_site
 from .models import StopTime
 
-admin.site.register(StopTime)
+admin_site.register(StopTime)

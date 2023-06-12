@@ -97,6 +97,11 @@ SWAGGER_SETTINGS = {
    }
 }
 
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD =  os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = '2525'
+
 TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
 REST_FRAMEWORK = {
@@ -151,7 +156,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
 ]
 CORS_ALLOW_METHODS = [
-    'GET', 'POST', 'DELETE', 'PUT'
+    'GET', 'POST', 'DELETE', 'PUT', 'PATCH'
 ]
 
 # Database

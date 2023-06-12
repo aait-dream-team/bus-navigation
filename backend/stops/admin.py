@@ -1,5 +1,5 @@
-from django.contrib import admin
+from bus_navigation_backend.new_admins import admin_site
 from .models import Stop
 # Register your models here.
 
-admin.site.register(Stop)
+admin_site.register(Stop)
