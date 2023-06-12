@@ -82,7 +82,8 @@ INSTALLED_APPS = [
     'celery_worker.apps.CeleryWorkerConfig',
     'updater',
     'corsheaders',
-    'drf_yasg'
+    'drf_yasg',
+    'trip_updater'
 ]
 
 SWAGGER_SETTINGS = {
