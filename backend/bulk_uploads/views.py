@@ -55,18 +55,6 @@ def unzip_and_add(request):
                     model.objects.bulk_create(new_instances, ignore_conflicts=True)
                     print(f"Updated {len(new_instances)} models")
                 return Response({'message': 'Success'}, status=status.HTTP_200_OK)
-            # get the zip file from request.data
-            zip_file = request.data['zip_file']
-            # open it with zipfile.ZipFile
-            with zipfile.ZipFile(zip_file) as z:
-                # loop through its namelist
-                for file_name in z.namelist():
-                    # read its content with zip_file.read
-                    content = z.read(file_name)
-                    # pass it to your function
-                    your_function(content)
-        # return a success response
-        return Response({'message': 'Success'}, status=status.HTTP_200_OK)
     else:
         # return an error response
         return Response({'error': 'No zip file provided'}, status=status.HTTP_400_BAD_REQUEST)

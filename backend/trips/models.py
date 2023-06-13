@@ -2,6 +2,7 @@ from django.db import models
 from agencies.models import Agency
 from shapes.models import Shape
 from routes.models import Route
+import uuid
 
 class Trip(models.Model):
     id = models.CharField(max_length=200, primary_key=True,  default=uuid.uuid4)

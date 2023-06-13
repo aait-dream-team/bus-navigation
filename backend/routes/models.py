@@ -1,5 +1,6 @@
 from django.db import models
 from agencies.models import Agency
+import uuid
 
 RouteType = (("car" , "Roads"),("air", "AirPlanes"))
 class Route(models.Model):

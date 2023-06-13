@@ -1,5 +1,6 @@
 from django.db import models
 from admins.models import Admin 
+import uuid
 
 class Stop(models.Model):
     id = models.CharField(max_length=200, primary_key=True,  default=uuid.uuid4)

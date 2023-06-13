@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 class Shape(models.Model):
     id = models.CharField(max_length=200, primary_key=True,  default=uuid.uuid4)
     shape_pt_lat = models.DecimalField(max_digits=9, decimal_places=6)
