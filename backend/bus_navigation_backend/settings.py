@@ -84,7 +84,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'shapes',
-    'bulk_uploads'
+    'bulk_uploads',
+    'trip_updater'
 ]
 
 SWAGGER_SETTINGS = {

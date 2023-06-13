@@ -46,7 +46,6 @@ class AdminViewSetsTests(APITestCase):
         url = reverse('admins-detail', args=[self.admin.id])
         response = self.client.get(url)
         data = response.json()
-        print(data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data['email'], self.admin.email)
         logger.debug("The test_retrieve_admin_success test has ended successfully")

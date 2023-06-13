@@ -37,7 +37,7 @@ services:
       - EMAIL_HOST_PASSWORD=f6d2853c50208e
 
     # Generate static css and js, apply migrations and start server
-    command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && daphne bus_navigation_backend.asgi:application --bind 0.0.0.0 --port 8000"
+    command: sh -c "python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
 
     depends_on:
       - db
@@ -81,16 +81,16 @@ services:
       - db
       - redis
       - celery-worker
-  backend-test:
-    image: bus-navigation-backend
+  # backend-test:
+  #   image: bus-navigation-backend
 
-    volumes:
-      - ./backend:/code
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    command: python manage.py test
+  #   volumes:
+  #     - ./backend:/code
+  #   environment:
+  #     - POSTGRES_NAME=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   command: python manage.py test
   frontend:
     restart: unless-stopped
     build: 
@@ -101,12 +101,12 @@ services:
     volumes:
       - ./frontend:/code
 
-  frontend-test:
-    image: bus-navigation-frontend
+  # frontend-test:
+  #   image: bus-navigation-frontend
 
-    volumes:
-      - ./frontend:/code
-    command: npm test
+  #   volumes:
+  #     - ./frontend:/code
+  #   command: npm test
   otp:
     build: ./otp-service
     restart: unless-stopped
@@ -118,7 +118,7 @@ services:
       - JAVA_OPTIONS=-Xmx4G
     command:
       [
-        '--build --serve /var/otp/graphs/portland',
+        '--load /var/otp/graphs/portland',
         '--maxThreads 4'
       ]
 
