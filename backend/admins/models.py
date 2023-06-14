@@ -15,7 +15,7 @@ USER_TYPES = [("sys-admin", "System Administrator"), ("admin", "Administrator")]
 
 class Admin(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_type = models.CharField(choices=USER_TYPES, max_length=150, default=USER_TYPES[0])
+    user_type = models.CharField(choices=USER_TYPES, max_length=150, default=USER_TYPES[0][0])
     otp = models.CharField(max_length=6, null=True, blank=True)
     otp_created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
