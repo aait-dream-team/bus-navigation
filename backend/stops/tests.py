@@ -18,7 +18,7 @@ class StopViewSetTests(APITestCase):
         self.agency.save()
 
         self.parent_station = Stop(stop_name = 's1', stop_desc = 'stop1' , stop_code = 'j8', stop_lat = '5343', stop_long = '7834', 
-                                    stop_url = 'http://localhost:8000/stops/', location_type = LocationType[0][0], 
+                                    stop_url = 'http://localhost:8000/stops/', 
                                     admin = self.admin )
         self.parent_station.save()
 

@@ -4,7 +4,7 @@ from .models import Trip
 class TripSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trip
-        fields = ['id', 'headsign', 'short_name', 'direction', 'agency']
+        fields = ['id', 'headsign', 'short_name', 'direction', 'agency', 'route', 'shape']
 
 class ExportTripSerializer(serializers.ModelSerializer):
     route_id = serializers.CharField(default='')
