@@ -13,7 +13,6 @@ LANG = (("en", "English"), ("amh", "Amharic"))
 TIME_ZONE = (("+3", "UTC+3"),)
 
 class Agency(models.Model):
-    id = models.CharField(primary_key=True, max_length=200, default=uuid.uuid4)
     name = models.CharField(max_length=200)
     url = models.URLField()
     time_zone = models.CharField(choices=TIME_ZONE, max_length=200)

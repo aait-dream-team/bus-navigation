@@ -83,8 +83,6 @@ INSTALLED_APPS = [
     'updater',
     'corsheaders',
     'drf_yasg',
-    'shapes',
-    'bulk_uploads',
     'trip_updater'
 ]
 

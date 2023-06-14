@@ -3,7 +3,7 @@ from .models import Stop
 class StopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stop
-        fields = ['id', "stop_name", 'stop_desc', 'stop_lat', 'stop_long', 'stop_code', 'stop_url', 'admin', 'parent_station']
+        fields = ['id', "stop_name", 'stop_desc', 'stop_lat', 'stop_long', 'stop_code', 'stop_url', 'location_type', 'admin', 'parent_station']
 
 class ExportStopSerializer(serializers.ModelSerializer):
     level_id = serializers.CharField(default='')
@@ -12,7 +12,7 @@ class ExportStopSerializer(serializers.ModelSerializer):
     stop_lon = serializers.CharField(source='stop_long')
     class Meta:
         model = Stop
-        fields = ['stop_id','level_id', 'stop_name', 'stop_lat', 'stop_lon', 'parent_station']
+        fields = ['stop_id','level_id', 'stop_name', 'stop_lat', 'stop_lon', 'location_type', 'parent_station']
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

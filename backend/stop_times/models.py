@@ -11,7 +11,3 @@ class StopTime(models.Model):
     agency = models.ForeignKey(to = Agency, on_delete=models.CASCADE) 
     trip = models.ForeignKey(to = Trip, on_delete=models.CASCADE)
     stop = models.ForeignKey(to = Stop, on_delete=models.CASCADE)
-    timepoint = models.IntegerField(default=0)
-
-    class Meta:
-        unique_together = (('trip', 'stop_sequence'),)
