@@ -6,8 +6,14 @@ from .permissions import IsOwner
 from .models import Stop
 
 class StopViewSet(viewsets.ModelViewSet):
-    queryset = Stop.objects.all()
     serializer_class = StopSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.user_type == "sys-admin":
+            return Stop.objects.all()
+        else:
+            return Stop.objects.filter(admin=user)
 
     def get_permissions(self):
         if self.request.method == 'PUT' or self.request.method == 'PATCH':
