@@ -9,4 +9,4 @@ class Shape(models.Model):
 
     # define a str method that returns the shape id and sequence
     def __str__(self):
-        return f'Shape {self.shape_id} - Sequence {self.shape_pt_sequence}'
+        return f'Shape {self.id} - Sequence {self.shape_pt_sequence}'
