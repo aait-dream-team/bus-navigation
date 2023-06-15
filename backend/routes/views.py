@@ -6,8 +6,14 @@ from .serializer import RouteSerializer
 from .permissions import IsOwner
 
 class RouteViewSet(viewsets.ModelViewSet):
-    queryset = Route.objects.all()
     serializer_class = RouteSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.user_type == "sys-admin":
+            return Route.objects.all()
+        else:
+            return Route.objects.filter(agency__admin=user)
 
     def get_permissions(self):
         if self.request.method == 'PUT' or self.request.method == 'PATCH':

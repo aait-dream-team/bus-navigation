@@ -12,9 +12,9 @@ class ShapeViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == 'PUT' or self.request.method == 'PATCH':
-            permission_classes = [permissions.IsAuthenticated & IsOwner]
+            permission_classes = [permissions.IsAuthenticated]
         elif self.request.method == 'POST':
-            permission_classes = [permissions.IsAuthenticated & IsOwner]
+            permission_classes = [permissions.IsAuthenticated]
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
