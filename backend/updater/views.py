@@ -51,6 +51,7 @@ class AlertViewSet(viewsets.ModelViewSet):
         querySet = Alert.objects.all()
         data = gg.FeedMessage()
         header = data.header      
+        header.timestamp = int(time.time())
         header.gtfs_realtime_version = "2.0"
         for q_alert in querySet:
             entity = data.entity.add()
@@ -79,33 +80,24 @@ class AlertViewSet(viewsets.ModelViewSet):
         data = gg.FeedMessage()
         header = data.header      
         header.gtfs_realtime_version = "2.0"
+        header.timestamp = int(time.time())
         for q_alert in querySet:
             entity = data.entity.add()
             entity.id = str(q_alert.alert_feed_id)
             alert = entity.alert
-            entity_sel = alert.informed_entity.add()
             if q_alert.affected_entity == "route":
-                entity_sel.route_id = str(q_alert.route_id)
-            # entity_sel.route_id = "1:10460407"   
-            entity_sel_2 = alert.informed_entity.add()
+                entity_sel = alert.informed_entity.add()
+                entity_sel.route_id = str(q_alert.route_id.id)
             if q_alert.affected_entity == "agency":
-                entity_sel_2.agency_id = "AA"
+                entity_sel_2 = alert.informed_entity.add()
+                entity_sel_2.agency_id = str(q_alert.agency_id.id)
             alert.cause = cause_mapping[q_alert.cause]
             alert.effect = effect_mapping[q_alert.effect]
             active = alert.active_period.add()
-            active.start = int(datetime.timestamp(q_alert.start_timestamp)  ) 
-            active.end =  int(datetime.timestamp(q_alert.start_timestamp))  + q_alert.duration.seconds
+            active.start = int(datetime.timestamp(q_alert.start_timestamp))
+            active.end =  (int(datetime.timestamp(q_alert.start_timestamp)) + q_alert.duration.seconds)
             h = alert.header_text
             trans = h.translation.add()
             trans.text = q_alert.message
             trans.language = "en"
         return response.HttpResponse(data.SerializeToString(), content_type="application/protobuf")
-
-    def get_permissions(self):
-        if self.request.method == 'PUT' or self.request.method == 'PATCH':
-            permission_classes = [permissions.IsAuthenticated & IsOwner]
-        elif self.request.method == 'POST':
-            permission_classes = [permissions.IsAuthenticated & (IsOwner | IsSystemAdmin)]
-        else:
-            permission_classes = [permissions.IsAuthenticated]
-        return [permission() for permission in permission_classes]
