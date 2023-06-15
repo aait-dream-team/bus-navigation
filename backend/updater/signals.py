@@ -10,12 +10,12 @@ def save_alert_profile(sender, instance, **kwargs):
     channel_layer = get_channel_layer()
     print('\n\nhi\n\n')
     if instance.affected_entity == 'trip':
-        connection_string = f'{instance.affected_entity}_{instance.trip_id}'    
+        connection_string = f'{instance.affected_entity}_{instance.trip_id.id}'    
     elif instance.affected_entity == 'route':
-        connection_string = f'{instance.affected_entity}_{instance.route_id}'
+        connection_string = f'{instance.affected_entity}_{instance.route_id.id}'
     elif instance.affected_entity == 'agency':
-        connection_string = f'{instance.affected_entity}_{instance.agency_id}_12121212' 
-    connection_string =  "trip_id_12121212" 
+        connection_string = f'{instance.affected_entity}_{instance.agency_id.id}' 
+    connection_string =  connection_string.replace(":", "-").replace(")", "_").replace("(", "_").replace("@", "-").replace("/", ".")
     print(connection_string)
     async_to_sync(channel_layer.group_send)(connection_string, {
         'type': 'notify_update',
