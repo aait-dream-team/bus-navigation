@@ -4,6 +4,7 @@ from django.db import models
 from trips.models import Trip
 from routes.models import Route
 from agencies.models import Agency
+from stop_times.models import StopTime
 from django.core.exceptions import ValidationError
 
 class VehicleUpdate(models.Model):
@@ -43,3 +44,10 @@ class Alert(models.Model):
     def clean(self):
         if not (self.agency_id or self.route_id or self.trip_id):
             raise ValidationError('At least one field is required.')
+
+class TripUpdate(models.Model):
+    trip_update_feed_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    trip_id = models.ForeignKey(to=Trip, on_delete=models.CASCADE)
+    stop_time_id = models.ForeignKey(to=StopTime, on_delete=models.CASCADE)
+    delay = models.DurationField()
+    trip_update_timestamp = models.DateTimeField(default=datetime.now)

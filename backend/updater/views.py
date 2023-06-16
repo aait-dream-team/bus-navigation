@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.views import View
 from django.http import response
 from rest_framework import viewsets, permissions, status
@@ -8,9 +10,9 @@ from rest_framework.decorators import api_view, authentication_classes,permissio
 
 from .serializer import AlertSerializer, VehicleUpdateSerializer
 from utils.common_permissions import IsOwner, IsSystemAdmin
-from .models import Alert, VehicleUpdate
+from .models import Alert, VehicleUpdate, TripUpdate
 from . import   gtfs_rt_pb2 as gg
-from .serializer import AlertSerializer
+from .serializer import AlertSerializer, TripUpdateSerializer
 from django.shortcuts import get_object_or_404
 
 cause_mapping = list({
@@ -39,6 +41,43 @@ effect_mapping = list({
     "STOP_MOVED": gg.Alert.Effect.STOP_MOVED,
 }.values())
 
+
+@authentication_classes([])
+@permission_classes([permissions.AllowAny])
+class TripUpdateViewSet(viewsets.ModelViewSet):
+    queryset = TripUpdate.objects.all()
+    serializer_class = TripUpdateSerializer
+    
+    def list(self, request, *args, **kwargs):
+        trip_updates = TripUpdate.objects.all()
+        trips_updated = defaultdict(list)
+        for trip_update in trip_updates:
+            trips_updated[trip_update.trip_id.id].append(trip_update)
+        data = gg.FeedMessage()
+        header = data.header
+        header.gtfs_realtime_version = "2.0"
+        for trip_id, current_trip_updates in trips_updated.items():
+            entity = data.entity.add()
+
+            entity.id = str(current_trip_updates[0].trip_update_feed_id)
+            trip_update = entity.trip_update
+            trip = trip_update.trip
+            # TripDescriptor
+            trip.trip_id = trip_id 
+            for update in current_trip_updates:
+                stop_time_update = trip_update.stop_time_update.add()
+                # StopTimeUpdate
+                stop_time_update.stop_id = update.stop_time_id.stop.id 
+                stop_time_update.stop_sequence = update.stop_time_id.stop_sequence
+                arrival = stop_time_update.arrival
+                # StopTimeEvent arrival
+                arrival.delay = update.delay.seconds
+                departure = stop_time_update.departure
+                departure.delay = update.delay.seconds # seconds
+            trip_update.timestamp = int(max(update.trip_update_timestamp.timestamp() for update in current_trip_updates)) # update_timestamp 
+        # This shows a report for the agency at http://localhost:8082/otp/routers/default/index/agencies/1/AA/alerts
+        # and for the route at http://localhost:8082/otp/routers/default/index/routes/1:1:10460407/alerts
+        return response.HttpResponse(data.SerializeToString(), content_type="application/protobuf")
 
 
 @authentication_classes([])

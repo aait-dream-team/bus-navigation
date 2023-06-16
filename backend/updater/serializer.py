@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Alert, VehicleUpdate
+from .models import Alert, VehicleUpdate, TripUpdate
 
 class AlertSerializer(serializers.ModelSerializer):
     cause_field = serializers.SerializerMethodField()
@@ -18,3 +18,8 @@ class VehicleUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = VehicleUpdate
         fields = ['lat', 'long', 'trip', 'timestamp']
+
+class TripUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TripUpdate
+        fields = "__all__"

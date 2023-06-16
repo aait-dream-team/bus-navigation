@@ -60,6 +60,7 @@ router.register(r'stop_times', stop_time_views.StopTimeViewSet,
                 basename='stop_times')
 router.register(r'trips', trip_views.TripViewSet, basename='trips')
 router.register(r'alerts', update_views.AlertViewSet, basename='alerts')
+router.register(r'trip_updates', update_views.TripUpdateViewSet, basename='trip_updates')
 router.register(r'shapes', shape_views.ShapeViewSet, basename="shapes")
 
 schema_view = get_schema_view(
@@ -83,7 +84,6 @@ urlpatterns += [
     path('plan/', plan_views.UserView.as_view()),
     path('bulk_upload/', bulk_upload_views.unzip_and_add),
     path('trip_updates/', trip_updater_views.TestView.as_view()),
-    # path("test-updates/", update_views.AlertView.as_view()),
     # path('', include(router.urls)),
     path('api-token-auth/', custom_auth_views.CustomAuthToken.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
